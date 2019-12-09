@@ -26,7 +26,7 @@
  解压打开 shadowsocks.exe在右下角任务栏右键小飞机
 - 服务器：从剪贴板导入URL
 
-`ss://YWVzLTI1Ni1jZmI6Y3N1c3QyMDE5QDE3Ni4xMjIuMTM0LjE1NToxMDA4Ng==`
+`ss://YWVzLTI1Ni1jZmI6Y3N1c3QyMDE5QDE3Ni4xMjIuMTM0LjE1NTo4MDgw`
 - 或者扫描屏幕上的二维码
 ![image](https://note.youdao.com/yws/public/resource/46aaf35c06afc2685a734e8b327c4864/xmlnote/4716CECCCBA546AF84036957F2E039D4/432)
 
