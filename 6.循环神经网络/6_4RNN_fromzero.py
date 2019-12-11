@@ -5,7 +5,10 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
-
+import time
+import sys
+sys.path.append("..")
+import d2lzh_pytorch as d2l
 #1.读取数据集
 with zipfile.ZipFile('/home/zhaochao/workspace/dive-into-deeplearning-pytorch/6.循环神经网络/jaychou_lyrics.txt.zip') as zin:
     with zin.open('jaychou_lyrics.txt') as f:
@@ -95,4 +98,29 @@ def grad_clipping(params, theta, device):
 #8.困惑度
 
 #9.定义模型训练函数
-def 
+def train_and_predict_rnn(rnn, get_params, init_rnn_state, num_hiddens, vocab_size, 
+                            device, corpus_indices, idx_to_char, char_to_idx, is_random_iter, 
+                            num_epochs, num_steps, lr, clipping_theta, batch_size, pred_period,
+                            pred_len, prefixes):
+    if is_random_iter:
+        data_iter_fn = d2l.data_iter_random
+    else:
+        data_iter_fn = d2l.data_iter_consecutive
+    params = get_params()
+    loss = nn.CrossEntropyLoss()
+
+    for epoch in range(num_epochs):
+        if not is_random_iter:
+            state = init_rnn_state(batch_size, num_hiddens, device)
+        l_sum, n, start = 0.0, 0, time.time()
+        data_iter = data_iter_fn(corpus_indices, batch_size, num_steps, device)
+        for X, Y in data_iter:
+            if is_random_iter:
+                state = init_rnn_state(batch_size, num_hiddens, device)
+                else:
+                    for s in state:
+                        s.detach_()
+                
+            inputs = to_onehot(X, vocab_size)
+            (outputs, state) = rnn(inputs, state, params)
+            outputs = torch.cat(outputs, dim=0)
